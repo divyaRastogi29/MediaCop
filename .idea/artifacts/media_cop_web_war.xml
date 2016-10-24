@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="media-cop-web:war">
+    <output-path>$PROJECT_DIR$/media-cop-web/target</output-path>
+    <root id="archive" name="media-cop-web-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="media-cop-web:war exploded" />
+    </root>
+  </artifact>
+</component>

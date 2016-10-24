@@ -1,0 +1,4 @@
+CREATE DATABASE mediaCop;
+use mediaCop;
+create  table HashTag(id INTEGER NOT NULL auto_increment , name VARCHAR(30) NOT NULL UNIQUE , rank INTEGER ,
+priority FLOAT , country VARCHAR(100) , created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , lastUpdated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY(id));
