@@ -1,11 +1,8 @@
 package com.follow.me.entity;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by divya on 20/10/16.
@@ -14,12 +11,12 @@ import java.util.Date;
 @Entity
 @Table(name="HashTag")
 @org.hibernate.annotations.Entity(dynamicInsert = true)
-public class HashTag {
+public class HashTagDO {
 
     @Id
     @Column(name = "id", unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id ;
+    Long id ;
 
     @Column(name = "name")
     @Type(type = "text")
@@ -36,20 +33,31 @@ public class HashTag {
     String country ;
 
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Generated(GenerationTime.INSERT)
-    Date created ;
+    Long created ;
 
     @Column(name = "lastUpdated")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Generated(GenerationTime.INSERT)
-    Date lastUpdated ;
+    Long lastUpdated ;
 
-    public int getId() {
+    @Column(name = "count")
+    Long count ;
+
+   public HashTagDO(){
+
+    }
+
+   public HashTagDO(String name ,int rank, float priority, String country , Long created, Long updated){
+        this.name = name ;
+        this.rank = rank ;
+        this.priority = priority ;
+        this.country = country ;
+        this.created = created ;
+        this.lastUpdated = updated ;
+    }
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -84,26 +92,34 @@ public class HashTag {
         this.country = country;
     }
 
-    public Date getCreated() {
+    public Long getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Long created) {
         this.created = created;
     }
 
-    public Date getLastUpdated() {
+    public Long getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(Long lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
     }
 
     @Override
     public String toString(){
-        return "HashTag : [ id : "+id+" name : "+name+" rank : "+
-                rank+" priority : "+priority+" country : "+country+" created : "+created+" updated : "+lastUpdated+" ]";
+        return "HashTagDO : [id : "+id+" name : "+name+" rank : "+
+                rank+" priority : "+priority+" country : "+country+" created : "+created+" updated : "+lastUpdated+" count : ["+count+" ]";
     }
 
 }

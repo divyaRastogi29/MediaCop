@@ -1,5 +1,6 @@
 package com.follow.me.dao;
 
+import com.follow.me.entity.HashTagDO;
 import org.hibernate.SessionFactory;
 
 /**
@@ -9,5 +10,7 @@ public interface HibernateDao {
 
     public SessionFactory getSessionFactory();
 
-    public void saveHashTag(com.follow.me.entity.HashTag hashTag) ;
+    public boolean saveHashTag(HashTagDO hashTagDO) ;
+
+    public HashTagDO getHashTagByNameAndCountry(String name, String country);
 }

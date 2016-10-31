@@ -16,7 +16,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 
 @Configuration
-@ComponentScan(basePackages= "follow")
+@ComponentScan(basePackages= "com.follow.me")
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 

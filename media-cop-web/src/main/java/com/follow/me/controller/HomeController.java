@@ -2,7 +2,7 @@ package com.follow.me.controller;
 
 
 import com.follow.me.dao.HibernateDao;
-import com.follow.me.entity.HashTag;
+import com.follow.me.entity.HashTagDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +40,15 @@ public class HomeController {
     public String addHashTag(HttpServletRequest request , Model model){
 
         LOG.info("\nRequest comes for adding Spitter");
-        HashTag hashTag = new HashTag();
-        hashTag.setName(request.getParameter("name"));
-        hashTag.setRank(Integer.parseInt(request.getParameter("rank")));
-        hashTag.setPriority(Float.parseFloat(request.getParameter("priority")));
-        hashTag.setCountry(request.getParameter("country"));
-        hibernateDao.saveHashTag(hashTag);
-        LOG.info("\nHashtag added : "+hashTag);
-        model.addAttribute("message","hashTag added to table");
+        HashTagDO hashTagDO = new HashTagDO();
+        hashTagDO.setName(request.getParameter("name"));
+        hashTagDO.setRank(Integer.parseInt(request.getParameter("rank")));
+        hashTagDO.setPriority(Float.parseFloat(request.getParameter("priority")));
+        hashTagDO.setCountry(request.getParameter("country"));
+
+        hibernateDao.saveHashTag(hashTagDO);
+        LOG.info("\nHashtag added : "+ hashTagDO);
+        model.addAttribute("message","hashTagDO added to table");
         return "default";
     }
 
