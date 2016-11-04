@@ -2,6 +2,7 @@ package com.follow.me.service.impl;
 
 import com.follow.me.Request.HashTag;
 import com.follow.me.dao.HibernateDao;
+import com.follow.me.entity.CountryHashDO;
 import com.follow.me.entity.HashTagDO;
 import com.follow.me.service.HashService;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +30,14 @@ public class HashServiceImpl implements HashService{
             saveOrUpdateHashTag(hashTag);
         }
         return true ;
+    }
+
+    @Override
+    public List<String> getHashTagByCountry(String name) {
+        CountryHashDO countryHashDO = hibernateDao.getTopHashtags(name);
+        if(countryHashDO==null)
+            return new ArrayList<>();
+        return countryHashDO.getHashtags();
     }
 
     public boolean saveOrUpdateHashTag(HashTag hashTag){

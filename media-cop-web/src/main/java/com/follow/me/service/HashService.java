@@ -10,4 +10,6 @@ import java.util.List;
 public interface HashService {
 
     public boolean updateHashTag(List<HashTag> hashTagList);
+
+    public List<String> getHashTagByCountry(String name) ;
 }

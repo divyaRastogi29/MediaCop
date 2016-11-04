@@ -3,15 +3,7 @@ package com.follow.me.model;
 /**
  * Created by divya on 24/10/16.
  */
-public class AddHashTagResponse {
+public class AddHashTagResponse extends BaseResponse{
 
-    private String message ;
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
