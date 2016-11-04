@@ -7,6 +7,8 @@ import com.follow.me.service.ScheduleCountryHashService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.concurrent.Executors;
  */
 
 @Service
+@EnableScheduling
 public class ScheduleCountryHashServiceImpl implements ScheduleCountryHashService {
 
     Logger LOG = LoggerFactory.getLogger(ScheduleCountryHashServiceImpl.class);
@@ -28,6 +31,7 @@ public class ScheduleCountryHashServiceImpl implements ScheduleCountryHashServic
 
     ExecutorService executorService ;
 
+    @Scheduled(cron="0 */5 * * * ?")
     public void updateRankRecords(){
         LOG.info("\nUpdate Rank Records called .");
         Map<String,List<HashTagDO>>  tagMap = hibernateDao.getHashtagsByCountry() ;
