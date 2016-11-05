@@ -11,10 +11,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by divya on 3/11/16.
@@ -29,10 +28,9 @@ public class ScheduleCountryHashServiceImpl implements ScheduleCountryHashServic
     @Autowired
     HibernateDao hibernateDao ;
 
-    ExecutorService executorService ;
-
-    @Scheduled(cron="0 */5 * * * ?")
+    @Scheduled(cron="* * */6 * * ?")
     public void updateRankRecords(){
+        LOG.info("\nScheduling started at : "+new Date());
         LOG.info("\nUpdate Rank Records called .");
         Map<String,List<HashTagDO>>  tagMap = hibernateDao.getHashtagsByCountry() ;
 
@@ -40,14 +38,12 @@ public class ScheduleCountryHashServiceImpl implements ScheduleCountryHashServic
 
         LOG.info("\nExecutor service called");
 
-        executorService = Executors.newFixedThreadPool(3);
 
         for(String country : tagMap.keySet()){
             rankRecords(country , tagMap.get(country));
             updateCountryHash(country , hibernateDao.getHashNamesByRankInCountry(country));
-            /*executorService.submit(new ScheduleRankService(country, tagMap.get(country))) ;*/
         }
-       /* executorService.shutdown();*/
+        LOG.info("\nScheduling completed at time : "+new Date());
     }
 
     private void updateCountryHash(String country ,List<String> hashNamesInCountry) {
