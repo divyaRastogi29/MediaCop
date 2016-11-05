@@ -34,11 +34,6 @@ public class ScheduleCountryHashServiceImpl implements ScheduleCountryHashServic
         LOG.info("\nUpdate Rank Records called .");
         Map<String,List<HashTagDO>>  tagMap = hibernateDao.getHashtagsByCountry() ;
 
-        LOG.info("\nMap recieved after calling dao : "+tagMap);
-
-        LOG.info("\nExecutor service called");
-
-
         for(String country : tagMap.keySet()){
             rankRecords(country , tagMap.get(country));
             updateCountryHash(country , hibernateDao.getHashNamesByRankInCountry(country));
@@ -51,7 +46,6 @@ public class ScheduleCountryHashServiceImpl implements ScheduleCountryHashServic
         CountryHashDO countryHash = new CountryHashDO();
         countryHash.setCountry(country);
         countryHash.setHashtags(hashNamesInCountry);
-        LOG.info("\nUpdating country hash for country : "+country);
         hibernateDao.saveCountryHashNames(countryHash);
         LOG.info("\nUpdated country hash for country : "+country);
     }
@@ -61,30 +55,26 @@ public class ScheduleCountryHashServiceImpl implements ScheduleCountryHashServic
         int currRank = -1;
         float prevPriority = 0;
         for(HashTagDO hashTagDO : hashTagDOList){
+            LOG.info("\nSaving Hashtag in rank records");
             if(currRank==-1){
                 currRank = 1;
                 hashTagDO.setRank(currRank);
-                LOG.info("\nSaving Hashtag in rank records : "+hashTagDO);
                 hibernateDao.saveHashTag(hashTagDO);
-                LOG.info("\nSaved hashtag in rank records");
                 prevPriority = hashTagDO.getPriority();
             }
             else{
                 if(hashTagDO.getPriority()==prevPriority){
                     hashTagDO.setRank(currRank);
-                    LOG.info("\nSaving Hashtag in rank records : "+hashTagDO);
                     hibernateDao.saveHashTag(hashTagDO);
-                    LOG.info("\nSaved hashtag in rank records");
                 }
                 else{
                     currRank += 1;
                     prevPriority = hashTagDO.getPriority();
                     hashTagDO.setRank(currRank);
-                    LOG.info("\nSaving Hashtag in rank records");
                     hibernateDao.saveHashTag(hashTagDO);
-                    LOG.info("\nSaved hashtag in rank records");
                 }
             }
+            LOG.info("\nSaved hashtag in rank records");
         }
     }
 

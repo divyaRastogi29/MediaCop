@@ -41,6 +41,7 @@ public class HashController {
             response.setMessage("\nSuccessfully updated");
         }
         catch (Throwable e){
+            LOG.info("\n"+e.toString());
             response.setSuccessful(false);
             response.setMessage("\nError while proceesing event");
         }
@@ -62,6 +63,7 @@ public class HashController {
             LOG.info("\nResponse is : "+response);
         }
         catch (Throwable e){
+            LOG.info("\n"+e.toString());
             response.setMessage("\nError processing the event !!");
             response.setSuccessful(false);
         }
