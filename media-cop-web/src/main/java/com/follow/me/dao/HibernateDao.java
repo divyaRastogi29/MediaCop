@@ -12,7 +12,6 @@ import java.util.Map;
  */
 public interface HibernateDao {
 
-    public SessionFactory getSessionFactory();
 
     public boolean saveHashTag(HashTagDO hashTagDO) ;
 

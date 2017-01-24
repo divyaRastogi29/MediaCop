@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/media-cop-base/target/maven-archiver/maven-archiver.iml" filepath="$PROJECT_DIR$/media-cop-base/target/maven-archiver/maven-archiver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/media-cop-base/target/maven-archiver/maven-archiver (1).iml" filepath="$PROJECT_DIR$/media-cop-base/target/maven-archiver/maven-archiver (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/media-cop-client/target/maven-archiver/maven-archiver (2).iml" filepath="$PROJECT_DIR$/media-cop-client/target/maven-archiver/maven-archiver (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/media-cop-web/target/maven-archiver/maven-archiver (3).iml" filepath="$PROJECT_DIR$/media-cop-web/target/maven-archiver/maven-archiver (3).iml" />
       <module fileurl="file://$PROJECT_DIR$/media-cop.iml" filepath="$PROJECT_DIR$/media-cop.iml" />
       <module fileurl="file://$PROJECT_DIR$/media-cop-base/media-cop-base.iml" filepath="$PROJECT_DIR$/media-cop-base/media-cop-base.iml" />
       <module fileurl="file://$PROJECT_DIR$/media-cop-client/media-cop-client.iml" filepath="$PROJECT_DIR$/media-cop-client/media-cop-client.iml" />

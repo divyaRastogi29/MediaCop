@@ -21,51 +21,62 @@ import java.util.Map;
  */
 @Repository
 @Transactional
-public class HibernateDaoImpl implements HibernateDao {
+public class HibernateDaoImpl extends BaseDao implements HibernateDao {
 
-    @Autowired
-    public SessionFactory sessionFactory ;
 
-    @Override
-    public SessionFactory getSessionFactory() {
-        return sessionFactory ;
-    }
 
     @Override
     public boolean saveHashTag(HashTagDO hashTagDO) {
-        Transaction tx = getSessionFactory().openSession().beginTransaction();
-        getSessionFactory().getCurrentSession().saveOrUpdate(hashTagDO);
-        getSessionFactory().getCurrentSession().flush();
+        Transaction tx = getSession().beginTransaction();
+        getSession().saveOrUpdate(hashTagDO);
+        getSession().flush();
         tx.commit();
-      //  getSessionFactory().close();
+        closeSession();
         return true ;
     }
 
     @Override
     public boolean saveCountryHashNames(CountryHashDO countryHashDO){
-        Transaction tx = getSessionFactory().openSession().beginTransaction();
-        getSessionFactory().getCurrentSession().saveOrUpdate(countryHashDO);
-        getSessionFactory().getCurrentSession().flush();
+        Transaction tx = getSession().beginTransaction();
+        getSession().saveOrUpdate(countryHashDO);
+        getSession().flush();
         tx.commit();
-     //   getSessionFactory().close();
+        closeSession();
         return true ;
     }
 
 
     @Override
     public HashTagDO getHashTagByNameAndCountry(String name, String country) {
-        List<HashTagDO> list = getSessionFactory().openSession().createQuery("from HashTagDO where name=:name " +
-                "and country=:country").setParameter("name",name).setParameter("country",country).list() ;
-        if(list.size()>0)
-            return list.get(0);
+        try {
+            List<HashTagDO> list = getSession().createQuery("from HashTagDO where name=:name " +
+                    "and country=:country").setParameter("name",name).setParameter("country",country).list() ;
+            if(list.size()>0)
+                return list.get(0);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+           closeSession();
+        }
         return null ;
     }
 
     @Override
     public CountryHashDO getTopHashtags(String country) {
-        List<CountryHashDO> list = getSessionFactory().openSession().createQuery("from CountryHashDO where country=:country").setParameter("country",country).list();
-       if(list.size()>0)
-           return list.get(0);
+        try {
+            List<CountryHashDO> list = getSession().createQuery("from CountryHashDO where country=:country").setParameter(
+                    "country",country).list();
+            if(list.size()>0)
+                return list.get(0);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+          //  closeSession();
+        }
         return null ;
     }
 
@@ -74,27 +85,53 @@ public class HibernateDaoImpl implements HibernateDao {
         List<String> distinctCountries = getDistinctCountries() ;
         Map<String, List<HashTagDO>> map = new HashMap<>();
         for(String country : distinctCountries){
-            List<HashTagDO> countryRecord = getSessionFactory().openSession().createQuery("from HashTagDO where country=:country order by priority desc").setParameter("country",country).list();
-            map.put(country,countryRecord);
+            try {
+                List<HashTagDO> countryRecord = getSession().createQuery("from HashTagDO where country=:country order by priority desc").setParameter("country",country).list();
+                map.put(country,countryRecord);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            finally {
+              //  closeSession();
+            }
         }
         return map ;
     }
 
     @Override
     public List<String> getHashNamesByRankInCountry(String country) {
-       List<HashTagDO> hashTagDOList = getSessionFactory().openSession().createQuery("from HashTagDO " +
-               "where country=:country order by rank").setMaxResults(100).setParameter("country",country).list();
-        List<String> hashNames = new ArrayList<>();
-        for(HashTagDO hashTagDO : hashTagDOList){
-            hashNames.add(hashTagDO.getName());
+        try {
+            List<HashTagDO> hashTagDOList = getSession().createQuery("from HashTagDO " +
+                    "where country=:country order by rank").setMaxResults(100).setParameter("country",country).list();
+            List<String> hashNames = new ArrayList<>();
+            for(HashTagDO hashTagDO : hashTagDOList){
+                hashNames.add(hashTagDO.getName());
+            }
+            return hashNames ;
         }
-        return hashNames ;
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            closeSession();
+        }
+        return new ArrayList<>();
     }
 
     public List<String> getDistinctCountries(){
-        Criteria criteria = getSessionFactory().openSession().createCriteria(HashTagDO.class);
-        criteria.setProjection(Projections.distinct(Projections.distinct(Projections.property("country"))));
-        return criteria.list() ;
+        try {
+            Criteria criteria = getSession().createCriteria(HashTagDO.class);
+            criteria.setProjection(Projections.distinct(Projections.distinct(Projections.property("country"))));
+            return criteria.list();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            closeSession();
+        }
+        return new ArrayList<>();
     }
 
 }

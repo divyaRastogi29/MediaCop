@@ -28,9 +28,9 @@ public class ScheduleCountryHashServiceImpl implements ScheduleCountryHashServic
     @Autowired
     HibernateDao hibernateDao ;
 
-    @Scheduled(cron="* * */6 * * ?")
+    @Scheduled(cron="0 0 0,6,12,18 * * *")
     public void updateRankRecords(){
-        LOG.info("\nScheduling started at : "+new Date());
+        LOG.info("\n\n\n\n\nScheduling started at : "+new Date());
         LOG.info("\nUpdate Rank Records called .");
         Map<String,List<HashTagDO>>  tagMap = hibernateDao.getHashtagsByCountry() ;
 

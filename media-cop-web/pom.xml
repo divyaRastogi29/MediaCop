@@ -100,11 +100,10 @@
         </dependency>
 
         <!-- hibernate dependencies-->
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.3.11.Final-atlassian-1</version>
+            <version>4.3.11.Final</version>
         </dependency>
 
         <!--Spring security dependencies-->
@@ -162,6 +161,12 @@
             <artifactId>gson</artifactId>
             <version>2.6.2</version>
         </dependency>
+
+       <!-- <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+        </dependency>-->
 
     </dependencies>
 

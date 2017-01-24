@@ -27,12 +27,17 @@ public class RootConfig {
 
     @Bean
     public DriverManagerDataSource getDriverManager(@Value("${jdbc.driverClassName}") String driver , @Value("${jdbc.url}") String url,
-                                                    @Value("${jdbc.username}") String userName , @Value("${jdbc.password}") String password){
+                                                  @Value("${jdbc.username}") String userName , @Value("${jdbc.password}") String password){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driver);
         dataSource.setUrl(url);
         dataSource.setUsername(userName);
         dataSource.setPassword(password);
+       /*
+        dataSource.setMaxPoolSize(50);
+        dataSource.setMinPoolSize(1);
+        dataSource.setMaxStatements(20);
+        dataSource.setTestConnectionOnCheckout(true);*/
         return dataSource;
     }
 
@@ -45,6 +50,7 @@ public class RootConfig {
         properties.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
         properties.setProperty("show_sql","true");
         properties.setProperty("hibernate.hbm2ddl.auto","update");
+        properties.setProperty("connection.pool_size","10");
         localSessionFactoryBean.setHibernateProperties(properties);
        localSessionFactoryBean.setAnnotatedClasses(HashTagDO.class) ;
         return localSessionFactoryBean ;
